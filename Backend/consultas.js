@@ -3,8 +3,9 @@ const { Pool } = require('pg');
 const pool = new Pool({
   host: 'localhost',
   user: 'postgres',
-  password: 'postgres',
+  password: 'hola12345',
   database: 'likeme',
+  port: 1025,              // ← AGREGA ESTA LÍNEA
   allowExitOnIdle: true
 });
 
