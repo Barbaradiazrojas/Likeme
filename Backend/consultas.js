@@ -1,3 +1,4 @@
+/* eslint-env node */
 const { Pool } = require('pg');
 
 const pool = new Pool({
@@ -5,7 +6,7 @@ const pool = new Pool({
   user: 'postgres',
   password: 'hola12345',
   database: 'likeme',
-  port: 1025,              // ← AGREGA ESTA LÍNEA
+  port: 1025,
   allowExitOnIdle: true
 });
 
@@ -20,4 +21,18 @@ const agregarPost = async (titulo, img, descripcion) => {
   await pool.query(consulta, values);
 };
 
-module.exports = { obtenerPosts, agregarPost };
+// ⭐ NUEVA: Incrementar likes de un post
+const agregarLike = async (id) => {
+  const consulta = "UPDATE posts SET likes = likes + 1 WHERE id = $1";
+  const values = [id];
+  await pool.query(consulta, values);
+};
+
+// ⭐ NUEVA: Eliminar un post
+const eliminarPost = async (id) => {
+  const consulta = "DELETE FROM posts WHERE id = $1";
+  const values = [id];
+  await pool.query(consulta, values);
+};
+
+module.exports = { obtenerPosts, agregarPost, agregarLike, eliminarPost };
